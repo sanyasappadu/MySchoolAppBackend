@@ -59,5 +59,20 @@ const deleteStudent = async (req, res, next ) => {
     res.status(500).json({message:"internal server error"})
   }
 }
-module.exports = {studentCreate, studentLogin, getStudent, getStudentList, deleteStudent}
+const createStudentList = async (req, res, next) => {
+  const studentsData = req.body
+  try {
+    const newStudentsList =  studentsData.map((student)=> ({
+      ...student,
+      password:bcrypt.hashSync(student.password, 10)
+    }));
+    const savedStudents = await Student.insertMany(newStudentsList);
+    console.log(savedStudents);
+
+    res.status(200).send("Students has been created!");
+  } catch (err) {
+    next(err);
+  }
+};
+module.exports = {studentCreate, studentLogin, getStudent, getStudentList, deleteStudent, createStudentList}
 
