@@ -38,4 +38,15 @@ const getTeacher = async ( req, res, next) => {
     res.status(500).json({message:"internal server error"})
   }
 }
-module.exports = { createTeacher, loginTeacher , getTeacher }
+const deleteTeacher = async (req, res, next)=>{
+  const teacherId = req.params.idnumber;
+  try {
+    const idnumber = await Teacher.findOneAndDelete(teacherId)
+    if(!idnumber) return next(createError(404, "Teacher notFound"));
+    res.status(200).send("teacher is deleted")
+  } catch (error) {
+    console.error('error deleting teacher:', error);
+    res.status(500).json({message:"internal server error"})
+  }
+}
+module.exports = { createTeacher, loginTeacher , getTeacher, deleteTeacher }
