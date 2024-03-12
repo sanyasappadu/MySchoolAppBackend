@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require("dotenv");
 const studentRoutes = require("./routes/student");
+const teacherRoutes = require("./routes/teacher");
 
 const app = express();
 const port = 6000;
@@ -19,6 +20,7 @@ const connect = () => {
     });
 };
 app.use("/api", studentRoutes);
+app.use("/api", teacherRoutes);
 
 app.listen(port, () => {
   connect();
