@@ -48,5 +48,16 @@ const getStudentList = async (req, res, next) => {
     res.status(500).json({message:"internal server error"})
   }
 }
-module.exports = {studentCreate, studentLogin, getStudent, getStudentList}
+const deleteStudent = async (req, res, next ) => {
+  const studentId = req.params.idnumber
+  try {
+    const student = await Student.findOneAndDelete(studentId);
+    if(!student) return next(createError(404, "Student not found!"));
+    res.status(200).json(student)
+  } catch (error) {
+    console.error('error geting student:', error);
+    res.status(500).json({message:"internal server error"})
+  }
+}
+module.exports = {studentCreate, studentLogin, getStudent, getStudentList, deleteStudent}
 
