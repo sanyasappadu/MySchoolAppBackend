@@ -27,4 +27,15 @@ const teacher = await Teacher.findOne({ idnumber: req.body.idnumber });
     next(err);
   }
 };
-module.exports = { createTeacher, loginTeacher }
+const getTeacher = async ( req, res, next) => {
+  const teacherId = req.params.idnumber;
+  try {
+    const teacherData = await Teacher.findOne(teacherId)
+    if(!teacherData) return next(createError(404, "Teacher notFound"));
+    res.status(200).json(teacherData)
+  } catch (error) {
+    console.error('error geting teacher:', error);
+    res.status(500).json({message:"internal server error"})
+  }
+}
+module.exports = { createTeacher, loginTeacher , getTeacher }
