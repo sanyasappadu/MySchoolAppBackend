@@ -14,4 +14,17 @@ const createTeacher = async (req, res, next) => {
     next(err);
   }
 };
-module.exports = { createTeacher }
+const loginTeacher = async (req, res, next) => {
+  try {
+const teacher = await Teacher.findOne({ idnumber: req.body.idnumber });
+    if (!teacher) return next(createError(404, "Teacher not found!"));
+ 
+    const isCorrect = await bcrypt.compare(req.body.password, teacher.password);
+    if (!isCorrect) return next(createError(400, "Wrong Credentials!"));
+
+    res.status(200).json("teacher login successfully");
+  } catch (err) {
+    next(err);
+  }
+};
+module.exports = { createTeacher, loginTeacher }
