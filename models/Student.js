@@ -29,11 +29,18 @@ const StudentSchema = new mongoose.Schema({
     img:{ 
         type:String,
     },
-    idnumber:{
-        type:String,
-        unique:true,
-        required:true,
-        default:function(){return Math.random().toString(36).substring(2,10)}
+    idnumber: {
+        type: String,
+        unique: true,
+        required: true,
+        default: function () {
+            const now = new Date();
+            const year = now.getFullYear().toString().slice(-3);
+            const randomDigits = Math.floor(100 + Math.random() * 900); // Generates random 3-digit number
+            const idPrefix = 'S';
+            const schoolCode = "MES"
+            return idPrefix + year + schoolCode + randomDigits;
+        }
     },
     class:{
         type:String,
@@ -44,6 +51,10 @@ const StudentSchema = new mongoose.Schema({
         required:true,
     },
     admin:{
+        type:Boolean,
+        default:null,
+    },
+    classLeader:{
         type:Boolean,
         default:null,
     },

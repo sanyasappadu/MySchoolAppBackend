@@ -30,11 +30,18 @@ const TeacherSchema = new mongoose.Schema({
         type:String,
         required:true
     },
-    idnumber:{
-        type:String,
-        unique:true,
-        required:true,
-        default:function(){return Math.random().toString(36).substring(2,10)}
+    idnumber: {
+        type: String,
+        unique: true,
+        required: true,
+        default: function () {
+            const now = new Date();
+            const year = now.getFullYear().toString().slice(-3);
+            const randomDigits = Math.floor(100 + Math.random() * 900); // Generates random 3-digit number
+            const idPrefix = 'T';
+            const schoolCode = "MES"
+            return idPrefix + year + schoolCode + randomDigits;
+        }
     },
     qualification:{
         type:[String],
@@ -54,6 +61,10 @@ const TeacherSchema = new mongoose.Schema({
     },
     admin:{
         type:Boolean,
+        default:null
+    },
+    hmandvhm:{
+        type:String,
         default:null
     },
     isPasswordSet:{

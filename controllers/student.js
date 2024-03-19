@@ -1,7 +1,7 @@
 const Student = require('../models/Student.js');
 const bcrypt = require("bcryptjs");
 const createError = require("../error.js");
-
+const jwt = require("jsonwebtoken");
 const studentCreate = async (req, res, next) => {
   try {
     const salt = bcrypt.genSaltSync(10);
@@ -21,11 +21,24 @@ const studentLogin = async (req, res, next) => {
  
     const isCorrect = await bcrypt.compare(req.body.password, student.password);
     if (!isCorrect) return next(createError(400, "Wrong Credentials!"));
-    res.status(200).json("Student login successfully");
+
+    const token = jwt.sign({ id: student._id }, process.env.JWT);
+    const { password, ...others } = student._doc;
+ 
+    res
+      .cookie("access_token", token, {
+        httpOnly: true,
+      })
+      .status(200)
+      .json({
+        message: "Student login successfully",
+        student: others
+      });
   } catch (err) {
     next(err);
   }
 };
+
 const getStudent = async (req, res, next) => {
   const studentId = req.params.idnumber
   try {

@@ -1,7 +1,7 @@
 const Teacher = require('../models/Teacher.js');
 const bcrypt = require("bcryptjs");
 const createError = require("../error.js");
- 
+const jwt = require("jsonwebtoken");
 const createTeacher = async (req, res, next) => {
   try {
     const salt = bcrypt.genSaltSync(10);
@@ -16,17 +16,29 @@ const createTeacher = async (req, res, next) => {
 };
 const loginTeacher = async (req, res, next) => {
   try {
-const teacher = await Teacher.findOne({ idnumber: req.body.idnumber });
+    const teacher = await Teacher.findOne({ idnumber: req.body.idnumber });
     if (!teacher) return next(createError(404, "Teacher not found!"));
  
     const isCorrect = await bcrypt.compare(req.body.password, teacher.password);
     if (!isCorrect) return next(createError(400, "Wrong Credentials!"));
 
-    res.status(200).json("teacher login successfully");
+    const token = jwt.sign({ id: teacher._id }, process.env.JWT);
+    const { password, ...others } = teacher._doc;
+ 
+    res
+      .cookie("access_token", token, {
+        httpOnly: true,
+      })
+      .status(200)
+      .json({
+        message: "Teacher login successfully",
+        teacher: others
+      });
   } catch (err) {
     next(err);
   }
 };
+
 const getTeacher = async ( req, res, next) => {
   const teacherId = req.params.idnumber;
   try {
