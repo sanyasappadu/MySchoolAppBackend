@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const dotenv = require("dotenv");
 const studentRoutes = require("./routes/student");
 const teacherRoutes = require("./routes/teacher");
-
+const markRoutes = require('./routes/mark');
 const app = express();
 const port = 6000;
 dotenv.config();
@@ -21,7 +21,7 @@ const connect = () => {
 };
 app.use("/api", studentRoutes);
 app.use("/api", teacherRoutes);
-
+app.use('/api', markRoutes);
 app.listen(port, () => {
   connect();
   console.log(`Server is running on port ${port}`);
