@@ -1,0 +1,123 @@
+openapi: 3.0.0
+info:
+  title: Mark List API
+  description: API documentation for managing mark lists
+  version: 1.0.0
+servers:
+  - url: http://localhost:6000/api
+paths:
+  /marks:
+    post:
+      summary: Create a new mark entry
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Mark'
+      responses:
+        '201':
+          description: Mark entry created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Mark'
+        '400':
+          description: Bad request, mark entry creation failed
+    put:
+      summary: Update an existing mark entry
+      parameters:
+        - name: idnumber
+          in: path
+          required: true
+          description: ID number of the student
+          schema:
+            type: string
+        - name: class
+          in: path
+          required: true
+          description: Class of the student
+          schema:
+            type: string
+        - name: unitTest
+          in: path
+          required: true
+          description: Unit test type
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Mark'
+      responses:
+        '200':
+          description: Mark entry updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Mark'
+        '400':
+          description: Bad request, mark entry update failed
+    get:
+      summary: Get details of a mark entry
+      parameters:
+        - name: idnumber
+          in: path
+          required: true
+          description: ID number of the student
+          schema:
+            type: string
+        - name: class
+          in: path
+          required: true
+          description: Class of the student
+          schema:
+            type: string
+        - name: unitTest
+          in: path
+          required: true
+          description: Unit test type
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Mark entry details retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Mark'
+        '400':
+          description: Bad request, mark entry details retrieval failed
+components:
+  schemas:
+    Mark:
+      type: object
+      required:
+        - idnumber
+        - class
+        - unitTest
+      properties:
+        idnumber:
+          type: string
+        class:
+          type: string
+        unitTest:
+          type: string
+        name:
+          type: string
+        telugu:
+          type: number
+        english:
+          type: number
+        maths:
+          type: number
+        science:
+          type: number
+        social:
+          type: number
+        totalMarks:
+          type: number
+        rank:
+          type: number
