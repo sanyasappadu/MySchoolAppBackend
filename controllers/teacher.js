@@ -1,6 +1,6 @@
 const Teacher = require('../models/Teacher.js');
 const bcrypt = require("bcryptjs");
-const createError = require("../error.js");
+const createError = require("../utils/error.js");
 const jwt = require("jsonwebtoken");
 const createTeacher = async (req, res, next) => {
   try {
