@@ -1,11 +1,7 @@
 const mongoose  = require("mongoose")
 
 const StudentSchema = new mongoose.Schema({
-    firstname:{
-        type:String,
-        required:true,
-    },
-    lastname:{
+    name:{
         type:String,
         required:true,
     },
@@ -50,14 +46,10 @@ const StudentSchema = new mongoose.Schema({
         type:String,
         required:true,
     },
-    admin:{
-        type:Boolean,
-        default:null,
-    },
-    classLeader:{
-        type:Boolean,
-        default:null,
-    },
+    role: {
+        type: String,
+        enum: ["classLeader", "admin"],
+      },
     isPasswordSet:{
         type:Boolean,
         default:null,
@@ -68,3 +60,21 @@ const StudentSchema = new mongoose.Schema({
 )
 const Student = mongoose.model("Student", StudentSchema)
 module.exports = Student;
+
+
+// const student = {
+//     name:"sunny",
+//     age:22,
+//     marks: {
+//         class6:{
+//             unit1:{
+//                 telugu:{
+//                     marks:22,
+//                     MaxMarks:25,
+//                 },
+//                 hindhi:23,
+//                 maxMarks:25
+//             },
+//         }
+//      }
+// }

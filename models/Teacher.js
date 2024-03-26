@@ -1,11 +1,7 @@
 const mongoose  = require("mongoose")
 
 const TeacherSchema = new mongoose.Schema({
-    firstname:{
-        type:String,
-        required:true,
-    },
-    lastname:{
+    name:{
         type:String,
         required:true,
     },
@@ -59,14 +55,10 @@ const TeacherSchema = new mongoose.Schema({
         type:Number,
         required:true,
     },
-    admin:{
-        type:Boolean,
-        default:null
-    },
-    hmandvhm:{
-        type:String,
-        default:null
-    },
+    role: {
+        type: String,
+        enum: ["hm", "vhm", "admin"],
+      },
     isPasswordSet:{
         type:Boolean,
         default:null,
