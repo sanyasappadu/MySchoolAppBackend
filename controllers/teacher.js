@@ -2,49 +2,29 @@ const Teacher = require('../models/Teacher.js');
 const bcrypt = require("bcryptjs");
 const createError = require("../utils/error.js");
 const jwt = require("jsonwebtoken");
-// const createTeacher = async (req, res, next) => {
-//   try {
-//     const salt = bcrypt.genSaltSync(10);
-//     const hash = bcrypt.hashSync(req.body.password, salt);
-//     const newTeacher = new Teacher({ ...req.body, password: hash });
-//     console.log(newTeacher)
-//     await newTeacher.save();
-//     res.status(200).send("Teacher has been created!");
-//   } catch (err) {
-//     next(err);
-//   }
-// };
 const createTeacher = async (req, role, res) => {
   try {
     const validateName = async (name) => {  
       let teacher = await Teacher.findOne({ name });
       return teacher ? false : true;
     };
-
-    //Get teacher from database with same email if any
     const validateEmail = async (email) => {
       let teacher = await Teacher.findOne({ email });
       return teacher ? false : true;
     };
-    // Validate the name
     let nameNotTaken = await validateName(req.name);
     if (!nameNotTaken) {
       return res.status(400).json({
         message: `Name is already taken.`,
       });
     }
-
-    // validate the email
     let emailNotRegistered = await validateEmail(req.email);
     if (!emailNotRegistered) {
       return res.status(400).json({
         message: `Email is already registered.`,
       });
     }
-
-// Hash password using bcrypt
     const password = await bcrypt.hash(req.password, 12);
-    // create a new user
     const newTeacher = new Teacher ({
       ...req,
       password,
@@ -56,41 +36,13 @@ const createTeacher = async (req, role, res) => {
       message: "Hurry! now you are successfully registred. Please nor login."
     });
   } catch (err) {
-    // Implement logger function if any
     return res.status(500).json({
       message: `${err.message}`
     });
   }
 };
-
-// const loginTeacher = async (req, res, next) => {
-//   try {
-//     const teacher = await Teacher.findOne({ idnumber: req.body.idnumber });
-//     if (!teacher) return next(createError(404, "Teacher not found!"));
- 
-//     const isCorrect = await bcrypt.compare(req.body.password, teacher.password);
-//     if (!isCorrect) return next(createError(400, "Wrong Credentials!"));
-
-//     const token = jwt.sign({ id: teacher._id }, process.env.JWT);
-//     const { password, ...others } = teacher._doc;
- 
-//     res
-//       .cookie("access_token", token, {
-//         httpOnly: true,
-//       })
-//       .status(200)
-//       .json({
-//         message: "Teacher login successfully",
-//         teacher: others
-//       });
-//   } catch (err) {
-//     next(err);
-//   }
-// };
 const loginTeacher = async (req, role, res) => {
   let { name, password } = req;
-
-  // First Check if the user exist in the database
   const teacher = await Teacher.findOne({ name });
   if (!teacher) {
     return res.status(404).json({
