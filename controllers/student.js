@@ -110,15 +110,29 @@ const getStudentList = async (req, res, next) => {
     res.status(500).json({message:"internal server error"})
   }
 }
-const deleteStudent = async (req, res, next ) => {
-  const studentId = req.params.idnumber
+const deleteStudent = async (req, res, next) => {
   try {
-    const student = await Student.findOneAndDelete(studentId);
-    if(!student) return next(createError(404, "Student not found!"));
-    res.status(200).json(student)
+    console.log(req.params.idnumber)
+    const student = await Student.findOneAndDelete({ idnumber: req.params.idnumber });
+    if (!student) {
+      return next(createError(404, "Student not found!"));
+    }
+    res.status(200).json({ message: "Student deleted successfully" });
   } catch (error) {
-    console.error('error geting student:', error);
-    res.status(500).json({message:"internal server error"})
+    console.error('Error deleting student:', error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+}
+async function deleteStudentById(idnumber) {
+  try {
+      const deletedStudent = await Student.findOneAndDelete({ idnumber });
+      if (!deletedStudent) {
+          console.log('Student not found.');
+          return;
+      }
+      console.log('Deleted student:', deletedStudent);
+  } catch (error) {
+      console.error('Error deleting student:', error);
   }
 }
 const createStudentList = async (req, res, next) => {
@@ -142,6 +156,7 @@ const createStudentList = async (req, res, next) => {
 const studentAuth = (req, res, next) => {
   const authHeader = req.headers["authorization"];
   console.log(process.env.JWT);
+  console.log(authHeader);
   if (!authHeader) return res.sendStatus(403);
   console.log(authHeader); // Bearer token
   const token = authHeader.split(" ")[1];

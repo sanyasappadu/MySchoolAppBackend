@@ -14,10 +14,8 @@ router.post("/Login-admin", async (req, res) => {
 router.post("/Login-classLeader", async (req, res) => {
   await studentLogin(req.body, "classLeader", res);
   });
-router.get("/protected-classLeader", studentAuth, checkRole(["classLeader"]), async (req, res) => {
-  return res.json(`welcome ${req.body.name}`);
-  });
-router.get("/getStudent/:id", getStudent)
+router.get("/protected-classLeader", studentAuth, checkRole(["classLeader"]));
+router.get("/getStudent/:id", studentAuth, checkRole(["classLeader"]) , getStudent)
 router.get("/getStudentList/:class", getStudentList)
 router.delete("/deleteStudent/:id", deleteStudent)
 router.post("/createStudentList", createStudentList)

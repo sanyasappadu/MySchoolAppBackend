@@ -16,6 +16,26 @@ exports.createMark = async (req, res) => {
     });
   }
 };
+exports.createMarks = async (req, res) => {
+  try {
+    const marks = await Promise.all(req.body.map(async (markData) => {
+      const mark = await Mark.create(markData);
+      return mark;
+    }));
+
+    res.status(201).json({
+      status: 'success',
+      data: {
+        marks
+      }
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: 'fail',
+      message: err.message
+    });
+  }
+};
 
 exports.updateMark = async (req, res) => {
   try {

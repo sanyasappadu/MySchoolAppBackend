@@ -1,0 +1,67 @@
+SCHOOL MANAGEMENT APP
+this is the school manament for managing school activies like cteating HM, VHM, teacher and students 
+in this project there is two extraa role : 
+for teachers admin
+for sudents admin and class leader
+HM and VHM has access to create teachers and students
+the teachers and studens who have admin roles they can create students
+the studens who have class leader role they can take attendence and give marks to the students to help teachers
+teachers can teach ENGLISH, MATHS, SCIENCE, SOCIAL, COMPUTER PROGRAMMING, PHYSICAL EDUCATION
+
+HEAD MASTER
+Ability to manage own school settings
+Ability to create, edit, view and delete VHM, teachers and students
+Ability to create, edit, view and delete roles like admin and class leader
+
+
+VISE HEAD MASTER
+Ability to create, edit, view and delete teachers and students
+Ability to create, edit, view and delete roles like admin and class leader
+
+TEACHER
+Ability to create, edit, view and delete sylabii
+Ability to create, edit, manage, view and delete timetables
+Ability to create, edit, manage, view and delete marklists
+Ability apply leave
+Ability to post blogs
+Ability to aprove the leave of studens
+
+
+TEACHER WITH ADMIN
+Ability to create, edit, view and delete sylabii
+Ability to create, edit, manage, view and delete timetables
+Ability to create, edit, view and delete students
+Ability to create, edit, view and delete class leader
+Ability to create, edit, manage, view and delete marklists
+Ability apply leave
+Ability to post blogs
+Ability to aprove the leave of studens
+
+STUDENT
+Ability to create, edit and view profile
+Ability to view marklists
+Ability view attendence
+Ability apply leave
+Ability to post blogs
+
+
+
+STUDENT WITH ADMIN
+Ability to create, edit, view and delete students
+Ability apply leave
+Ability to post blogs
+
+STUDENT WITH CLASS LEADER
+Ability to create, edit, manage, view and delete marklists
+Ability apply leave
+Ability to post blogs
+
+1. tech stack
+for backend
+nodejs, expressjs, mongoose, dotenv, jwt
+for frontend
+reactjs, react-dom-router, axios, react-redux-toolkit
+
+2. roles in school
+head master, vise head master, teachers, students
+admins, class leaders
