@@ -13,6 +13,10 @@ const blogSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  role: {
+    type: String,
+    enum: ["hm", "vhm", "teacher-admin", "teacher", "student-admin", "class-leader", "student"],
+  },
   description:{
     type: String,
     required: true
