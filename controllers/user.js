@@ -41,11 +41,11 @@ const userCreate = async (req, res) => {
   }
 };
 const userLogin = async (req, res) => {
-  let { name, password } = req;
-  const user = await User.findOne({ name });
+  let { email, password } = req;
+  const user = await User.findOne({ email });
   if (!user) {
     return res.status(404).json({
-      message: "Name is not found. Invalid login credentials.",
+      message: "email is not found. Invalid login credentials.",
       success: false,
     });
   }
@@ -54,7 +54,6 @@ const userLogin = async (req, res) => {
   if (isMatch) {
     let token = jwt.sign(
       {
-        name: user.name,
         email: user.email,
       },
       process.env.JWT,
@@ -62,7 +61,6 @@ const userLogin = async (req, res) => {
     );
 
     let result = {
-      name: user.name,
       email: user.email,
       token: `Bearer ${token}`,
       expiresIn: 168,

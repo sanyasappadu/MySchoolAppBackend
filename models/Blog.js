@@ -21,7 +21,7 @@ const blogSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  brief-description:{
+  briefDescription:{
     type: String,
     required: true
   },
