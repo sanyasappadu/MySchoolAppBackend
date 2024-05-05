@@ -5,6 +5,7 @@ const swaggerUi = require('swagger-ui-express');
 const YAML = require('yamljs');
 const studentRoutes = require("./routes/student");
 const teacherRoutes = require("./routes/teacher");
+const userRoutes = require("./routes/user");
 const markRoutes = require('./routes/mark')
 const blogRoutes = require('./routes/blog');
 const app = express();
@@ -24,6 +25,7 @@ const connect = () => {
 };
 app.use("/api", studentRoutes);
 app.use("/api", teacherRoutes);
+app.use("/api", userRoutes)
 app.use('/api', markRoutes);
 app.use('/api', blogRoutes);
 const swaggerDocument = YAML.load('./swagger.yaml');
