@@ -80,11 +80,11 @@ const userLogin = async (req, res) => {
 
 const getUser = async (req, res) => {
   try {
-    const user = await User.findOne({ idnumber: req.params.idnumber });
+    const user = await User.findOne({ email: req.params.email });
 
     if (!user) {
       return res.status(404).json({
-        message: "User not found with the provided idnumber.",
+        message: "User not found with the provided email.",
         success: false,
       });
     }
@@ -93,7 +93,7 @@ const getUser = async (req, res) => {
       success: true,
     });
   } catch (error) {
-    console.error("Error getting user by idnumber:", error);
+    console.error("Error getting user by email:", error);
     return res.status(500).json({
       message: "Internal server error.",
       success: false,
