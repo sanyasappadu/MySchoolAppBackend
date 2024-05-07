@@ -8,10 +8,14 @@ const teacherRoutes = require("./routes/teacher");
 const userRoutes = require("./routes/user");
 const markRoutes = require('./routes/mark')
 const blogRoutes = require('./routes/blog');
+const cors = require('cors');
 const app = express();
 const port = 4000;
 dotenv.config();
 app.use(express.json());
+app.use(cors({ origin: 'http://localhost:3000' }));
+app.use(cors({ origin: 'https://my-school-app-frontend.vercel.app' }));
+
 
 const connect = () => {
   mongoose
