@@ -65,7 +65,7 @@ const UserSchema = new mongoose.Schema({
   },
     role: {
         type: String,
-        enum: ["hm", "vhm", "teacher-admin", "teacher", "student-admin", "class-leader", "student"],
+        enum: ["hm", "vhm", "teacherAdmin", "teacher", "studentAdmin", "classLeader", "student"],
       },
     isPasswordSet:{
         type:Boolean,
