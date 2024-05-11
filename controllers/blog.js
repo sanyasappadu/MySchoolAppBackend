@@ -20,7 +20,7 @@ exports.createBlog = async (req, res) => {
 exports.updateBlog = async (req, res) => {
   try {
     const blog = await Blog.findOneAndUpdate(
-      { idnumber: req.params.idnumber, heading: req.params.heading },
+      { _id : req.params.id },
       req.body,
       { new: true, runValidators: true }
     );
@@ -41,8 +41,7 @@ exports.updateBlog = async (req, res) => {
 exports.getBlog = async (req, res) => {
   try {
     const blog = await Blog.findOne({
-      idnumber: req.params.idnumber,
-      heading: req.params.heading,
+      _id: req.params.id,
     });
     res.status(200).json({
       status: 'success',
@@ -76,8 +75,7 @@ exports.getAllBlogs = async (req, res) => {
 exports.deleteBlog = async (req, res) => {
   try {
     const deletedBlog = await Blog.findOneAndDelete({
-      idnumber: req.params.idnumber,
-      heading: req.params.heading,
+      _id : req.params.id,
     });
     if (!deletedBlog) {
       return res.status(404).json({
