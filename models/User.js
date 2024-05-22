@@ -40,11 +40,11 @@ const UserSchema = new mongoose.Schema({
         }
     },
     qualification:{
-        type:[String],
+        type:String,
         default:null
     },
     subjects:{
-        type:[String],
+        type:String,
         default:null
     },
     salaryDetails:{
@@ -65,7 +65,7 @@ const UserSchema = new mongoose.Schema({
   },
     role: {
         type: String,
-        enum: ["hm", "vhm", "teacherAdmin", "teacher", "studentAdmin", "classLeader", "student"],
+        enum: ["Head Master", "Vice Head Master", "Teacher Admin", "Teacher", "Student Admin", "Student Class Leader", "Student"],
       },
     isPasswordSet:{
         type:Boolean,
