@@ -152,6 +152,33 @@ const createUserList = async (req, res, next) => {
     next(err);
   }
 };
+const updateUser = async (req, res) => {
+  const email = req.params.email;
+  const updateData = { ...req.body };
+
+  // Ensure idnumber and email are not updated
+  delete updateData.idnumber;
+  delete updateData.email;
+
+  try {
+      const user = await User.findOne({ email });
+      if (!user) {
+          return res.status(404).json({ message: 'User not found' });
+      }
+
+      // Update the user's details
+      for (const key in updateData) {
+          if (updateData.hasOwnProperty(key)) {
+              user[key] = updateData[key];
+          }
+      }
+
+      await user.save();
+      res.status(200).json({ message: 'User updated successfully', user });
+  } catch (error) {
+      res.status(500).json({ message: 'An error occurred', error });
+  }
+};
 const userVerify = async (req, res, next) => {
   let token = req.headers.authorization;
 
@@ -206,5 +233,5 @@ const checkRole = (roles) => async (req, res, next) => {
     ? res.status(401).json("Sorry you do not have access to this route")
     : next();
 };
-module.exports = {userCreate, userLogin, getUser, getUserList, deleteUser, createUserList, userAuth, userVerify, checkRole}
+module.exports = {userCreate, userLogin, getUser, getUserList, deleteUser, createUserList, updateUser, userAuth, userVerify, checkRole}
 
