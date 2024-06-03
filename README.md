@@ -33,7 +33,7 @@ MySchoolBackend is a Node.js application built with Express.js and Mongoose that
 
 3. Create a `.env` file in the root directory and add the following environment variables:
     ```env
-    PORT=5000
+    PORT=4000
     MONGODB_URI=your_mongodb_connection_string
     JWT_SECRET=your_jwt_secret
     ```
