@@ -3,11 +3,15 @@ const mongoose = require('mongoose');
 const dotenv = require("dotenv");
 const swaggerUi = require('swagger-ui-express');
 const YAML = require('yamljs');
-const studentRoutes = require("./routes/student");
-const teacherRoutes = require("./routes/teacher");
 const userRoutes = require("./routes/user");
 const markRoutes = require('./routes/mark')
 const blogRoutes = require('./routes/blog');
+const admissionRoutes = require('./routes/admission');
+const leaveLetterRoutes = require('./routes/leaveLetter');
+const complaintsRoutes = require('./routes/complaint')
+const gamesRoutes = require('./routes/schoolGames')
+
+
 const cors = require('cors');
 const app = express();
 const port = 4000;
@@ -27,8 +31,11 @@ const connect = () => {
       throw err;
     });
 };
-app.use("/api", studentRoutes);
-app.use("/api", teacherRoutes);
+app.use("/api/leave", leaveLetterRoutes);
+app.use("/api/admission", admissionRoutes);
+app.use("/api/complaints", complaintsRoutes);
+app.use("/api/games", gamesRoutes);
+
 app.use("/api", userRoutes)
 app.use('/api', markRoutes);
 app.use('/api', blogRoutes);
