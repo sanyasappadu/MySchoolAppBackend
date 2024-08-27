@@ -2,9 +2,9 @@ const Admission = require('../models/Admission'); // Adjust the path as needed
 
 // Create a new leave letter
 const createAdmission = async (req, res) => {
-    const { name, idnumber, startDate, endDate, description, class: className } = req.body;
+    const { name, oldSchool, class: className } = req.body;
     try {
-        const newAdmission = new Admission({name, idnumber, startDate, endDate, description, class: className,});
+        const newAdmission = new Admission({name, oldSchool, class: className,});
         const savedAdmission = await newAdmission.save();
         res.status(201).json(savedAdmission);
     } catch (error) {
